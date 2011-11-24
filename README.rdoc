@@ -1,0 +1,79 @@
+= Everywhere
+
+Hash condition syntax for AR query everywhere!
+
+
+== Features
+
+=== where + not
+
+"+Everywhere+" enables you to construct where + not query such as below using AR Hash query syntax.
+
+  SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
+  SELECT "users".* FROM "users" WHERE ("users"."created_at" IS NOT NULL)
+  SELECT "users".* FROM "users" WHERE ("users"."status" NOT IN ('inactive', 'deleted')
+
+
+== Syntaxes
+
+"+Everywhere+" supports 4 syntaxes.
+
+* hash_value
+Push the value into a Hash indexed by +:not+.
+Similar to MongoDB. http://www.mongodb.org/display/DOCS/Advanced+Queries#AdvancedQueries-%24ne
+
+    User.where(:name => {:not => 'foo'})
+     => SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
+
+* hash_key
+Put the whole key + value Hash into another Hash indexed by +:not+.
+
+    User.where(:not => {:name => 'foo'})
+     => SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
+
+* symbol
+Put +:not+ as the first parameter of +where+ method.
+
+    User.where(:not, :name => 'foo')
+     => SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
+
+* method
+Use the special method named +where_not+.
+
+    User.where_not(:not, :name => 'foo')
+     => SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
+
+
+== Supported versions
+
+ActiveRecord 3.0.x, 3.1.x, and 3.2 (edge)
+
+
+== Usage
+
+Bundle 'everywhere' gem.
+
+
+== Configuring the syntax
+
+You can choose one from four syntaxes listed above.
+For example, if you prefer the symbol syntax, put the following line in your config file.
+
+  config.active_record.where_syntax = :symbol
+
+The default value is +:hash_value+.
+
+
+== Todo
+
++like+ and +not like+ (if needed)
+
+
+== Contributing to Everywhere
+
+* Fork, fix, then send me a pull request.
+
+
+== Copyright
+
+Copyright (c) 2011 Akira Matsuda. See MIT-LICENSE for further details.

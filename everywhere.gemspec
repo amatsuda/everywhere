@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Akira Matsuda"]
   s.email       = ["ronnie@dio.jp"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{Hash condition syntax for AR query everywhere!}
+  s.description = %q{Hash condition syntax for AR query everywhere!}
 
   s.rubyforge_project = "everywhere"
 
