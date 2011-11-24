@@ -43,6 +43,8 @@ Use the special method named +where_not+.
     User.where_not(:not, :name => 'foo')
      => SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
 
+See specs for more details.
+
 
 == Supported versions
 
