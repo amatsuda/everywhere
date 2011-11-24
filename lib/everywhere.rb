@@ -1,5 +1,2 @@
-require "everywhere/version"
-
-module Everywhere
-  # Your code goes here...
-end
+require 'everywhere/version'
+require 'everywhere/railtie'
