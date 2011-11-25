@@ -6,8 +6,8 @@ module ActiveRecord
       class << self
         include Everywhere::Util
 
-        def build_from_hash_with_not(engine, attributes, default_table)
-          attributes_with_not = attributes.map do |column, value|
+        def build_from_hash_with_not_and_like_and_not_like(engine, attributes, default_table)
+          attributes_with_not_and_like_and_not_like = attributes.map do |column, value|
             # {key: {not: value}}
             if value.is_a?(Hash) && (value.keys.size == 1) && value.keys.first.in?([:not, :like, :not_like])
               ["#{column}__#{value.keys.first}__", value.values.first]
@@ -15,7 +15,7 @@ module ActiveRecord
               [column, value]
             end
           end
-          build_from_hash_without_not(engine, attributes_with_not, default_table).map do |rel|
+          build_from_hash_without_not_and_like_and_not_like(engine, attributes_with_not_and_like_and_not_like, default_table).map do |rel|
             if rel.left.name.to_s.ends_with?('__not__')
               rel.left.name = rel.left.name.to_s.sub(/__not__$/, '').to_sym
               negate rel
@@ -30,13 +30,13 @@ module ActiveRecord
             end
           end
         end
-        alias_method_chain :build_from_hash, :not
+        alias_method_chain :build_from_hash, :not_and_like_and_not_like
       end
     else
       include Everywhere::Util
 
-      def build_from_hash_with_not(attributes, default_table)
-        attributes_with_not = attributes.map do |column, value|
+      def build_from_hash_with_not_and_like_and_not_like(attributes, default_table)
+        attributes_with_not_and_like_and_not_like = attributes.map do |column, value|
           # {key: {not: value}}
           if value.is_a?(Hash) && (value.keys.size == 1) && ((value.keys.first == :not) || (value.keys.first == :like) || (value.keys.first == :not_like))
             ["#{column}__#{value.keys.first}__", value.values.first]
@@ -44,7 +44,7 @@ module ActiveRecord
             [column, value]
           end
         end
-        build_from_hash_without_not(attributes_with_not, default_table).map do |rel|
+        build_from_hash_without_not_and_like_and_not_like(attributes_with_not_and_like_and_not_like, default_table).map do |rel|
           if rel.left.name.to_s.ends_with?('__not__')
             rel.left.name = rel.left.name.to_s.sub(/__not__$/, '').to_sym
             negate rel
@@ -59,7 +59,7 @@ module ActiveRecord
           end
         end
       end
-      alias_method_chain :build_from_hash, :not
+      alias_method_chain :build_from_hash, :not_and_like_and_not_like
     end
   end
 end
