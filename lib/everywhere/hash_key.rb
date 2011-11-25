@@ -10,7 +10,7 @@ module ActiveRecord
           attributes_with_not = {}
           attributes.each do |column, value|
             # {not: {key: value}}
-            if column.in?([:not, :like])
+            if column.in?([:not, :like, :not_like])
               value.each do |k, v|
                 attributes_with_not["#{k}__#{column}__"] = v
               end
@@ -25,6 +25,9 @@ module ActiveRecord
             elsif rel.left.name.to_s.ends_with? '__like__'
               rel.left.name = rel.left.name.to_s.sub(/__like__$/, '').to_sym
               Arel::Nodes::Matches.new rel.left, rel.right
+            elsif rel.left.name.to_s.ends_with? '__not_like__'
+              rel.left.name = rel.left.name.to_s.sub(/__not_like__$/, '').to_sym
+              Arel::Nodes::DoesNotMatch.new rel.left, rel.right
             else
               rel
             end
@@ -39,7 +42,7 @@ module ActiveRecord
         attributes_with_not = {}
         attributes.each do |column, value|
           # {not: {key: value}}
-          if (column == :not) || (column == :like)
+          if (column == :not) || (column == :like) || (column == :not_like)
             value.each do |k, v|
               attributes_with_not["#{k}__#{column}__"] = v
             end
@@ -54,6 +57,9 @@ module ActiveRecord
           elsif rel.left.name.to_s.ends_with? '__like__'
             rel.left.name = rel.left.name.to_s.sub(/__like__$/, '').to_sym
             Arel::Nodes::Matches.new rel.left, rel.right
+          elsif rel.left.name.to_s.ends_with? '__not_like__'
+            rel.left.name = rel.left.name.to_s.sub(/__not_like__$/, '').to_sym
+            Arel::Nodes::DoesNotMatch.new rel.left, rel.right
           else
             rel
           end
