@@ -52,3 +52,15 @@ describe 'not' do
     its(:to_sql) { should == %q["comments"."body" != 'foo'] }
   end
 end
+
+describe 'like' do
+  describe 'like match' do
+    before do
+      @where = Post.where(:like, :title => 'he%').where_values
+    end
+    subject { @where }
+    it { @where.should have(1).item }
+    subject { @where.first }
+    its(:to_sql) { should == %q["posts"."title" LIKE 'he%'] }
+  end
+end

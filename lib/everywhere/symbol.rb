@@ -5,8 +5,11 @@ module ActiveRecord
     include Everywhere::Util
 
     def build_where_with_not(opts, other = [])
-      if opts == :not
+      case opts
+      when :not
         build_where_without_not(*other).map {|r| negate r}
+      when :like
+        build_where_without_not(*other).map {|r| Arel::Nodes::Matches.new r.left, r.right}
       else
         build_where_without_not(opts, other)
       end
