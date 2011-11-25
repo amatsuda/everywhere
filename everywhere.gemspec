@@ -7,7 +7,7 @@ Gem::Specification.new do |s|
   s.version     = Everywhere::VERSION
   s.authors     = ["Akira Matsuda"]
   s.email       = ["ronnie@dio.jp"]
-  s.homepage    = ""
+  s.homepage    = 'https://github.com/amatsuda/everywhere'
   s.summary     = %q{Hash condition syntax for AR query everywhere!}
   s.description = %q{Hash condition syntax for AR query everywhere!}
 

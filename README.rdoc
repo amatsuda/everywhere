@@ -19,10 +19,17 @@ Same for where + like.
 
   SELECT "users".* FROM "users" WHERE ("users"."name" LIKE 'Akira%')
 
+=== where + not like
+
+And where + "not like" as well.
+
+  SELECT "users".* FROM "users" WHERE ("users"."name" NOT LIKE 'Matz%')
+
 
 == Syntaxes
 
-"+Everywhere+" supports 4 syntaxes.
+"+Everywhere+" supports 4 syntaxes. Note that you can use only one syntax at a time, and others will be disabled.
+The +hash_value+ syntax will be enabled by default.
 
 * hash_value
 Push the value into a Hash indexed by +:not+.
@@ -70,11 +77,6 @@ For example, if you prefer the symbol syntax, put the following line in your con
   config.active_record.where_syntax = :symbol
 
 The default value is +:hash_value+.
-
-
-== Todo
-
-+not like+ (if needed)
 
 
 == Contributing to Everywhere
