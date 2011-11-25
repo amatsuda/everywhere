@@ -9,6 +9,10 @@ module ActiveRecord
         def build_from_hash_with_not(engine, attributes, default_table)
           attributes_with_not = attributes.map do |column, value|
             # {key: {not: value}}
+            if column.is_a?(Hash)
+              (modifier, column) = column.to_a.first
+              value = {modifier => value}
+            end
             if value.is_a?(Hash) && (value.keys.size == 1) && value.keys.first.in?([:not, :like])
               ["#{column}__#{value.keys.first}__", value.values.first]
             else
@@ -35,6 +39,10 @@ module ActiveRecord
       def build_from_hash_with_not(attributes, default_table)
         attributes_with_not = attributes.map do |column, value|
           # {key: {not: value}}
+          if column.is_a?(Hash)
+              (modifier, column) = column.to_a.first
+              value = {modifier => value}
+            end
           if value.is_a?(Hash) && (value.keys.size == 1) && ((value.keys.first == :not) || (value.keys.first == :like))
             ["#{column}__#{value.keys.first}__", value.values.first]
           else
