@@ -11,7 +11,13 @@ Hash condition syntax for AR query everywhere!
 
   SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
   SELECT "users".* FROM "users" WHERE ("users"."created_at" IS NOT NULL)
-  SELECT "users".* FROM "users" WHERE ("users"."status" NOT IN ('inactive', 'deleted')
+  SELECT "users".* FROM "users" WHERE ("users"."status" NOT IN ('inactive', 'deleted'))
+
+=== where + like
+
+Same for where + like.
+
+  SELECT "users".* FROM "users" WHERE ("users"."name" LIKE 'Akira%')
 
 
 == Syntaxes
@@ -68,7 +74,7 @@ The default value is +:hash_value+.
 
 == Todo
 
-+like+ and +not like+ (if needed)
++not like+ (if needed)
 
 
 == Contributing to Everywhere
