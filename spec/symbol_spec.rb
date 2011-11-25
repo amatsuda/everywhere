@@ -64,3 +64,15 @@ describe 'like' do
     its(:to_sql) { should == %q["posts"."title" LIKE 'he%'] }
   end
 end
+
+describe 'not like' do
+  describe 'not like match' do
+    before do
+      @where = Post.where(:not_like, :title => 'he%').where_values
+    end
+    subject { @where }
+    it { @where.should have(1).item }
+    subject { @where.first }
+    its(:to_sql) { should == %q["posts"."title" NOT LIKE 'he%'] }
+  end
+end
