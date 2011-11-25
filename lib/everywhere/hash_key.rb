@@ -10,9 +10,9 @@ module ActiveRecord
           attributes_with_not = {}
           attributes.each do |column, value|
             # {not: {key: value}}
-            if column == :not
+            if column.in?([:not, :like])
               value.each do |k, v|
-                attributes_with_not["#{k}__not__"] = v
+                attributes_with_not["#{k}__#{column}__"] = v
               end
             else
               attributes_with_not[column] = value
@@ -22,6 +22,9 @@ module ActiveRecord
             if rel.left.name.to_s.ends_with? '__not__'
               rel.left.name = rel.left.name.to_s.sub(/__not__$/, '').to_sym
               negate rel
+            elsif rel.left.name.to_s.ends_with? '__like__'
+              rel.left.name = rel.left.name.to_s.sub(/__like__$/, '').to_sym
+              Arel::Nodes::Matches.new rel.left, rel.right
             else
               rel
             end
@@ -36,9 +39,9 @@ module ActiveRecord
         attributes_with_not = {}
         attributes.each do |column, value|
           # {not: {key: value}}
-          if column == :not
+          if (column == :not) || (column == :like)
             value.each do |k, v|
-              attributes_with_not["#{k}__not__"] = v
+              attributes_with_not["#{k}__#{column}__"] = v
             end
           else
             attributes_with_not[column] = value
@@ -48,6 +51,9 @@ module ActiveRecord
           if rel.left.name.to_s.ends_with? '__not__'
             rel.left.name = rel.left.name.to_s.sub(/__not__$/, '').to_sym
             negate rel
+          elsif rel.left.name.to_s.ends_with? '__like__'
+            rel.left.name = rel.left.name.to_s.sub(/__like__$/, '').to_sym
+            Arel::Nodes::Matches.new rel.left, rel.right
           else
             rel
           end
