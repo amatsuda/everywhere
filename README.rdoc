@@ -22,7 +22,7 @@ Same for where + like.
 
 == Syntaxes
 
-"+Everywhere+" supports 4 syntaxes.
+"+Everywhere+" supports 5 syntaxes.
 
 * hash_value
 Push the value into a Hash indexed by +:not+.
@@ -48,6 +48,13 @@ Use the special method named +where_not+.
 
     User.where_not(:name => 'foo')
      => SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
+
+* symbol_method
+Use the extended method of Symbol#+not+.
+
+    User.where(:name.not => 'foo')
+     => SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
+
 
 See specs for more details.
 
