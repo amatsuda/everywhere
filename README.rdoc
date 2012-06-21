@@ -68,7 +68,7 @@ See specs for more details.
 
 == Supported versions
 
-ActiveRecord 3.0.x, 3.1.x, and 3.2 (edge)
+ActiveRecord 3.0.x, 3.1.x, 3.2.x, and 4.0 (edge)
 
 
 == Usage
@@ -84,6 +84,17 @@ For example, if you prefer the symbol syntax, put the following line in your con
   config.active_record.where_syntax = :hash_value
 
 The default value is +:chain+.
+
+* for users of previous versions
+Note that the default behaviour has been changed since 2.0 release if you've not explicitly configured the syntax.
+
+
+== Running specs
+
+There is spec file for each syntax but there is no Rake task for running all the specs at once, because there's no way to load these freedom-patches without interfering each other.
+So, please run the +rspec+ command specifying one spec file.
+
+% bundle e rspec spec/chain_spec.rb
 
 
 == Contributing to Everywhere
