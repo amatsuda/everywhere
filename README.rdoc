@@ -29,7 +29,7 @@ And where + "not like" as well.
 == Syntaxes
 
 "+Everywhere+" supports 5 syntaxes. Note that you can use only one syntax at a time, and others will be disabled.
-The +hash_value+ syntax will be enabled by default.
+The +chain+ syntax will be enabled by default.
 
 * chain
 +Model.where+ with no args can be chained with +not+, +like+, and +not_like+ methods.
@@ -81,9 +81,9 @@ Bundle 'everywhere' gem.
 You can choose one from four syntaxes listed above.
 For example, if you prefer the symbol syntax, put the following line in your config file.
 
-  config.active_record.where_syntax = :symbol
+  config.active_record.where_syntax = :hash_value
 
-The default value is +:hash_value+.
+The default value is +:chain+.
 
 
 == Contributing to Everywhere
