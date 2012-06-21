@@ -28,8 +28,15 @@ And where + "not like" as well.
 
 == Syntaxes
 
-"+Everywhere+" supports 4 syntaxes. Note that you can use only one syntax at a time, and others will be disabled.
+"+Everywhere+" supports 5 syntaxes. Note that you can use only one syntax at a time, and others will be disabled.
 The +hash_value+ syntax will be enabled by default.
+
+* chain
++Model.where+ with no args can be chained with +not+, +like+, and +not_like+ methods.
+This syntax was proposed by Jeremy Kemper: https://github.com/rails/rails/pull/5950#issuecomment-5591330
+
+    User.where.not(:name => 'foo')
+     => SELECT "users".* FROM "users" WHERE ("users"."name" != 'foo')
 
 * hash_value
 Push the value into a Hash indexed by +:not+.
